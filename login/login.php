@@ -3,18 +3,15 @@
 
 	include("../common/checkconnection.php");
 	include("../common/functions.php");
-	
-	$isAGuest = false;
 
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		// Something was posted
 		// I thought I was gonna need to do something else w/ POST
 		// but it works for some reason
-		if (!(empty($_POST["email"])) && !(empty($_POST["email"]))) 
-		{
+
 			$email = $_POST["email"];
 			$password = $_POST["password"];
-
+			
 			// Check if email is found and verified
 			$sql = "SELECT * FROM login WHERE email = '" . $email . "'";
 			$result = mysqli_query($conn, $sql);
@@ -23,10 +20,10 @@
 			if (!$result || mysqli_num_rows($result) == 0) 
 			{
 				echo("No Account with that Email.");
-			} 
+			}
+			
 			else 
 			{
-				
 				$user_data = mysqli_fetch_assoc($result);
 				
 				if(password_verify($password, $user_data['PWORD']))
@@ -35,37 +32,22 @@
 				} 
 				else 
 				{
-					echo 'Passwords do not match';
+					echo 'Incorrect Password';
+				}
+				
+				
+				if ($user_data['VERIFIED_AT'] == null) {
+					echo 'You need to be verified';
+					header("Location: email-verification.php?email=" . $user_data['EMAIL']);
 				}
 			}
-		}
-			else 
-			{
-				$isAGuest = true;
-			}
 			
-			// Redirect to dashboard if login successful
-			// if new user redirect to account managment?
-			// if else admin to admin.php
-			// else account managment to setup user details
-				
-			if ($user_data['ACC_TYPE'] === 'just-created-user') 
-			{
-				// replace when done user managment
-				header("Location: ../dashboard/stub-user-managment.php");
-			} 
-			elseif ($user_data['ACC_TYPE'] === 'admin') 
-			{
-				header("Location: ../dashboard/stub-admin-dash.php");
-			} 
-			elseif ($isAGuest) 
-			{
-				header("Location: ../selection-tool/furniture-type.php");
-			} 
-			else 
-			{
-				header("Location: ../dashboard/index.php");
-			}				
+			if (isset($_SESSION['started-request'])){
+				header("Location: ../selection-tool/confirm-send.php");
+			}else {
+				header("Location: ../dashboard/dashboard.php");
+			}
+			die;
 		}	 
 ?>
 
@@ -86,25 +68,31 @@
 
     <main>
         <div class="login-container">
-            <div class="login-form">
+		
+            <div class="login-form">		
                 <!-- Title -->
-                <h2>Login</h2>
+                <h2>Login</h2><br>
                 <form method="POST">
                     <input type="text" name="email" placeholder="Email" required />
-                    <input type="password" name="password" placeholder="Password" required />
-                    <a href="signup.php">Sign up here</a> &nbsp;&nbsp;&nbsp;<a href='#'>Forgot Password?</a><br><br>
-                    <input type="submit" value="Submit" class="btn">
+                    <input type="password" name="password" placeholder="Password" required /><br>
+                    <a href="signup.php">Sign up here</a> &nbsp;&nbsp;&nbsp;<a href='send-email.php'>Forgot Password?</a>
+					
+					<br><br>
+					<?php
+						// if start request has started		
+						
+						if (isset($_SESSION['started-request'])){
+							echo '<a href="../selection-tool/confirmation.php">Back</a>';
+						}
+						if (isset($_GET['newpwd']) && 
+							$_GET['newpwd'] == 'passwordupdated'){
+							echo 'Password Reseted Log in!';
+						}
+					?>
+					<br><br>
+                    <input type="submit" name="user" value="Submit" class="btn"><br><br>
                 </form>
-            </div>
-            <div class="guest-checkout">
-				<form method="POST">
 				
-                <h1>Check Out As Guest</h1>
-				<input type="text" name="guest" value="guest" hidden/>
-				
-                <input type="submit" value="Start Request" class="btn">
-				
-				</form>
             </div>
         </div>
     </main>

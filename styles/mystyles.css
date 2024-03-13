@@ -1,23 +1,39 @@
+/* General Styles */
 body, html {
   margin: 0;
   padding: 0;
-  height: 100%;
   font-family: 'Montserrat', sans-serif;
 }
+
+
+/* Header Section */
+/*header {
+  STUB
+}*/
+
+/* Main Section */
 main {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 70vh;
+  
 }
 
-/* All for nav and footer (Mostly) */
+/* Navigation Styles */
 .topnav {
   overflow: hidden;
+  position: flex ;
+  top: 0;
+  left: 0;
+  width: 100%;
   background-color: #333;
-  text-align: center; 
+  text-align: center;
   transition: max-height 0.4s ease; /* Smooth transition for the nav */
-  max-height: 70px; 
+  max-height: 250px; 
   font-weight: bold;
+  z-index: 1000; /* Ensure the navigation bar appears above other elements */
+
 }
 
 .topnav a {
@@ -26,7 +42,10 @@ main {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 22px;
+line-height: 125px;
+margin-left: 9px;
+  
 }
 
 .topnav a.active {
@@ -38,9 +57,32 @@ main {
   display: none;
 }
 
+.beardedOxLogo {
+  height: 175px;
+   width: 145px; 
+   margin-left: 200px;
+    margin-right: 200px;
+     vertical-align: middle; 
+}
+
+
+
 @media screen and (max-width: 1200px) {
-  .topnav.responsive { max-height: 500px; } 
-  .topnav a:not(:first-child) {display: none;}
+  .topnav.responsive { 
+    max-height: 500px; 
+  } 
+  .topnav a:not(:first-child) {
+    display: none;
+  }
+.beardedOxLogo{
+  visibility: hidden;
+  display:none;
+}
+
+.topnav {
+  height: 150px;
+}
+
   .topnav a {
     display: none; 
   }
@@ -53,9 +95,10 @@ main {
   }
 }
 
- /* Responsivness :) */
 @media screen and (max-width: 1200px) {
-  .topnav.responsive {position: relative;}
+  .topnav.responsive {
+    position: relative;
+  }
   .topnav.responsive .icon {
     position: absolute;
     right: 0;
@@ -68,6 +111,8 @@ main {
   }
 }
 
+
+/* Footer Styles */
 .footer {
   background-color: #333;
   color: white;
@@ -97,10 +142,10 @@ main {
   font-size: 30px;
 }
 
-
 .socials {
   margin: 50px;
 }
+
 .socials a {
   color: white;
   text-decoration: none;
@@ -112,19 +157,11 @@ main {
   justify-content: space-between;
 }
 
-.left-footer {
-  flex-basis: 30%;
-  text-align: right; 
-}
-
+.left-footer,
+.right-footer,
 .middle-footer {
   flex-basis: 30%;
   text-align: center;
-}
-
-.right-footer {
-  flex-basis: 30%;
-  text-align: left;
 }
 
 .left-footer p,
@@ -132,7 +169,7 @@ main {
   margin: 5px 0;
 }
 
-/* Might remove but looks good */
+/* Link Styles */
 a {
   color: orange;
   text-decoration: none; 
@@ -143,7 +180,7 @@ a:hover {
   color: #ff6600; 
 }
 
-/* Our bits by bytes screen */
+/* About Us Section */
 .about-us {
   min-height: 60vh; 
   display: flex;
@@ -161,32 +198,37 @@ a:hover {
 }
 
 @media screen and (max-width: 600px) {
-	.bold-footer {
-	  font-weight: bold;
-	  font-size: 20px;
-	}
-	.about-us h1{
-		font-size: 40px;
-	}
+  .bold-footer {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .about-us h1{
+    font-size: 40px;
+  }
 }
 
-
-
-
-
-/* Login CSS*/
-.login-container {
+/* Login and Signup Styles */
+.login-container,
+.signup-form {
   display: flex;
   justify-content: space-between;
   margin: 50px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+   width: 60%;
 }
 
-.login-form {
+.login-form,
+.signup-form {
   background-color: #f0f0f0;
-  padding: 90px;
+  padding: 20px;
   border-radius: 8px;
   font-size: 18px;
+  width: 60%;
+ 
 }
+
 .login-form h2 {
   margin-bottom: 10px;
   font-size: 40px;
@@ -194,8 +236,10 @@ a:hover {
 
 .login-form input[type="text"],
 .login-form input[type="password"],
-.login-form button {
-  display: block;
+.login-form button,
+.signup-form input[type="text"],
+.signup-form input[type="password"],
+.signup-form input[type="submit"] {
   width: 90%;
   padding: 10px;
   margin-bottom: 10px;
@@ -204,66 +248,33 @@ a:hover {
   font-size: 15px;
 }
 
-.login-form .btn {
-  background-color: orange;
-  color: white;
-  border: none;
-  font-size: 20px;
-  padding: 10px 20x;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.login-form .btn:hover {
-  color: #ff6600; 
-}
-
-.guest-checkout {
-  text-align: center;
-  padding: 50px;
-}
-.guest-checkout h1{
-  font-size: 54px;
-}
-
-.guest-checkout .btn {
-  background-color: orange;
-  color: white;
-  border: none;
-  font-size: 20px;
-  padding: 20px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.guest-checkout .btn:hover {
-  color: #ff6600; 
-}
-
-/* For the sign up form */
-.signup-form {
-  padding: 80px;
-}
-.signup-form input[type="text"],
-.signup-form input[type="password"],
+.login-form .btn, 
+.btn,
 .signup-form input[type="submit"] {
-  width: 100%;
-  margin-bottom: 10px;
+  background-color: orange;
+  color: white;
+  border: none;
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-
-@media (max-width: 1200px) {
-  .login-container {
-	flex-wrap: wrap;
-  }
-    .login-form,
-	.guest-checkout,
-	.signup-form   {
-    width: 100%;
-  }
-    {
-    width: 100%;
-  }
+.login-form .btn:hover,
+.btn:hover {
+  color: #ff6600; 
 }
 
+.nav-controls a {
+  background-color: orange;
+  color: white;
+  border: none;
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
+.nav-controls a:hover {
+  color: #ff6600;
+}

@@ -15,7 +15,6 @@ function check_login($conn)
 		$result = mysqli_query($conn,$query);
 		if($result && mysqli_num_rows($result) > 0)
 		{
-
 			$user_data = mysqli_fetch_assoc($result);
 			return $user_data;
 		}
@@ -23,7 +22,7 @@ function check_login($conn)
 
 	//redirect to login
 	Print "Error Need account";
-	header("Refresh:5; url=../login/login.php");
+	header("Refresh:3; url=../login/login.php");
 	die;
 
 }
@@ -35,17 +34,27 @@ function print_nav()
 {
 
 	print '
-		<div class="topnav" id="myTopnav">
+		<div class="topnav" id="myTopnav" >
+		
+	
 		  <a href="https://www.thebeardedox.ca/">HOME</a>
 		  <a href="https://www.thebeardedox.ca/who-we-are">WHO WE ARE</a>
 		  <a href="https://www.thebeardedox.ca/blog">BLOG</a>
-		  <a href="https://www.thebeardedox.ca/gallery">GALLERY</a>
+		  <a href="https://www.thebeardedox.ca/gallery" >GALLERY</a>
+
+		
+		  <image class="beardedOxLogo"  src="../images/logos/bearded-ox.png"></image>
+	
+		  
 		  <a href="https://www.thebeardedox.ca/products">PRODUCTS</a>
 		  <a href="https://www.thebeardedox.ca/shop">SHOP</a>
 		  <a href="https://www.thebeardedox.ca/getintouch">GET IN TOUCH</a>
+		  <a href="https://www.thebeardedox.ca/getintouch">	CART </a>
 		  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
 			<i class="fa fa-bars"></i>
 		  </a>
+		
+		  
 		</div>
 
 	';
@@ -91,4 +100,37 @@ function print_footer()
 		';
 }
 
+
+
+function print_dropdown($accountType)
+{
+	echo '  
+		<div id="drop">
+			<ul>
+				<li>
+					<a href="#"> MENU </a>
+					<ul class="dropdown">';
+					
+	if ($accountType == "ADMIN") {
+		echo "
+			<li><a href=\"manage-customer.php\">Manage Customers</a></li>
+			<li><a href=\"stub-manage-order.php\">Manage Orders</a></li>
+			<li><a href=\"stub-manage-customer.php\">Inbox</a></li>
+		";      
+	} else {
+		echo "
+			<li><a href=\"account-Information.php\">Account Information</a></li>
+			<li><a href=\"stub-manage-order.php\">Manage Orders</a></li>
+			<li><a href=\"stub-inbox.php\">Inbox</a></li>
+		";
+	}
+					
+	echo '
+						<!-- Files might have to be renamed for better clarity but later -->
+						<li><a href="../login/logout.php">Log out</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>';
+}
 ?>

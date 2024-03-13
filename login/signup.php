@@ -9,6 +9,7 @@
 	//	echo 'Phew we have it!';
 	//}
 
+	// TODO: Fix the two email send cause its annoying
 
     //Import PHPMailer classes into the global namespace
     //These must be at the top of your script, not inside a function
@@ -24,15 +25,17 @@
 
 
 	session_start();
-
-	include("../common/checkConnection.php");
+	
+	include("../common/checkconnection.php");
 	include("../common/functions.php");
 
-	$email = $password = $passwordVerify = "";
+	$name = $email = $password = $passwordVerify = "";
 
 	$errCount = 0;
 
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
+		// I dont know what these are doing i forgor
+		$name = mysqli_real_escape_string($conn, $_POST['name']);
 		$email = mysqli_real_escape_string($conn, $_POST['email']);
 		$password = mysqli_real_escape_string($conn, $_POST['password']);
 		$passwordVerify = mysqli_real_escape_string($conn, $_POST['passwordVerify']);
@@ -48,7 +51,7 @@
 		$specialChars = preg_match('@[^\w]@', $password);
 		
 		
-
+		// first error checks
 		if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
 			echo 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.';
 			$errCount += 1;
@@ -63,10 +66,15 @@
 			$errCount += 1;
 		}
 		
-		// Php mailer stuffz
+		
+		// if no errors (valid inputs then hash password and send to database)
+		if ($errCount == 0) { 
+			
+			// Php mailer stuffz
 		//Instantiation and passing `true` enables exceptions
 		$mail = new PHPMailer(true);
 	 
+		
 			try {
 				//Enable verbose debug output
 				$mail->SMTPDebug = 0;//SMTP::DEBUG_SERVER;
@@ -86,7 +94,7 @@
 				$mail->Password = 'tcfzcsiouqzsnnes';
 				
 				/* Better for security and stuffz
-				
+				Important for later setup/documentation
 				Generating an App Password for Gmail:
 
 					Sign in to your Google Account: Go to https://myaccount.google.com/ and sign in with your Gmail email address and password.
@@ -120,9 +128,7 @@
 					Copy Password: Copy the generated app password. This is the password you'll use in your PHP script for SMTP authentication with Outlook.
 							
 				*/
-				
-				
-	 
+					 
 				//Enable TLS encryption;
 				$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 	 
@@ -141,43 +147,41 @@
 				$verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
 	 
 				$mail->Subject = 'Email verification';
-				$mail->Body    = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
+				$mail->Body    = '<p>Your verification code is: \n <b style="font-size: 30px;">' . $verification_code . '</b></p>';
 	 
 				$mail->send();
 				echo 'Message has been sent';
-				
-			// if no errors (valid inputs then hash password and send to database)
-			if ($errCount == 0) { 
+				} catch (Exception $e) {
+					echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+				}
+			
+			
+			
+			
 				// Hashes Password for security
 				$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 				
-				$insert = "INSERT INTO login (EMAIL, PWORD, VERIFY_CODE, VERIFIED_AT, ACC_TYPE) 
-					VALUES ('$email', '$hashedPassword', '$verification_code', NULL, 'just-created-user')";
-				mysqli_query($conn, $insert);
-				//send back to login page
-				 header("Location: email-verification.php?email=" . $email);
+				// Step 1: Insert into the customer table
+				$insert_customer = "INSERT INTO customer (FNAME) VALUES ('$name')";
+				mysqli_query($conn, $insert_customer);
+
+				// Step 2: Retrieve the auto-generated CUST_ID
+				$cust_id = mysqli_insert_id($conn);
+
+				// Step 3: Insert into the login table with the obtained CUST_ID
+				$insert_login = "INSERT INTO login (CUST_ID, EMAIL, PWORD, VERIFY_CODE, VERIFIED_AT, ACC_TYPE) 
+								 VALUES ('$cust_id', '$email', '$hashedPassword', '$verification_code', NULL, 'CUST')";
+				mysqli_query($conn, $insert_login);
+
+
+				
+				// Once email sends 
+				header("Location: email-verification.php?email=" . $email);
+				mysqli_close($conn);
 				die;
 			}
-			} catch (Exception $e) {
-				echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-			}
-	}	
 
-    
-	if (isset($_REQUEST['CUST_ID'])) {
-		$id = $_REQUEST['CUST_ID'];
-		$sql = "select * from login where CUST_ID='$id'";
-		$result = $conn->query($sql);
-		if ($result->num_rows > 0) {
-			$row = $result->fetch_assoc();
-			$email = $row['EMAIL'];		
-		}
 	}
- 
- 
-
- 
- 
 ?>
 
 <!DOCTYPE html>
@@ -199,24 +203,28 @@
 	  <div class="login-container">
 		<div class="login-form signup-form">
 		  <!-- title -->
-		  <h2>Sign Up</h2>
-		  <form method="post">		
-			<input type="text" name="email" placeholder="Email" value="<?php echo $email; ?>" required><br>
+		  
+		  <form method="post">	
+		  <h2>Sign Up</h2><br><br>
+			<input type="text" name="name" placeholder="Name" value="" required>	  
+			<input type="text" name="email" placeholder="Email" value="<?php echo $email; ?>" required>
 			<input type="password" name="password" placeholder="Password" required>
-			<input type="password" name="passwordVerify" placeholder="Confirm Password" required>
-
+			<input type="password" name="passwordVerify" placeholder="Confirm Password" required><br><br>
+			<?php
+				// if start request has started		
+						
+				if (isset($_SESSION['started-request'])){
+					echo '<a href="../selection-tool/confirmation.php">Back</a>';
+				}
+			?>
 			<a href='login.php'>Log in here</a><br><br>
 			<input type="submit" value="Submit" class="btn">	
 		  </form>
 		</div>
 	  </div>		
 	</main>
-
-
-
   <footer>
-	<?php print_footer();
-	?>
+	<?php print_footer();?>
   </footer>
 </body>
 </html>

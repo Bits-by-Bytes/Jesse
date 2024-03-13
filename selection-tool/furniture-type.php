@@ -1,54 +1,115 @@
 <?php
+	// Start session
 	session_start();
 
-	include("../common/checkconnection.php");
+	// Include common functions
 	include("../common/functions.php");
-	
-	if (empty($_POST["guest"])){
-		$user_data = check_Login($conn);
-	} 
 
-	if ($_SERVER['REQUEST_METHOD'] == "POST") {
-		// set variable in session?
-		
-		
-		header("Location: test.php");
+	// Handle form submission
+	if (isset($_POST['request-start'])) {
+		$_SESSION['started-request'] = $_POST['request-start'];
+		// Store form values in session for later use
+		foreach ($_POST as $key => $value) {
+			$_SESSION['info'][$key] = $value;
+		}
+
+		// Remove 'next' value from session
+		unset($_SESSION['info']['next']);
+
+		// Redirect based on furniture type
+		if ($_SESSION['info']['furniture-type'] == 'table') {
+			header("location: wood-type.php");
+		} else {
+			// Unset specific table options if not a table
+			unset($_SESSION['info']['table-shape-opt']);
+			header("location: wood-type.php");
+		}
+
+		// For testing purposes
+		// echo '<pre>';
+		// print_r ($_SESSION['info']);
+		// echo '</pre>';
+	} elseif (isset($_POST['exit'])) {
+		// Unset session data on exit
+		unset($_SESSION['request-start']);
+		unset($_SESSION['info']);
+		header("location: index.php");
+		exit();
 	}
 ?>
 
-
-
 <!DOCTYPE html>
 <html>
-	<head>	
-		<title>Furniture Select</title>
-			<link rel="stylesheet" href="../styles/mystyles.css">
-	<link rel="stylesheet" href="../styles/selection-tools.css">
-	</head>
-	<body>	
-	<h1> Hello Hello, <?php print $user_data['EMAIL']; ?> </h1>	
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../styles/selection-tool.css">
+	<link rel="stylesheet" href="../styles/mystyles.css">
 	
-	<a href="../login/logout.php"> Log out </a>
-	
-	    <form method="post">
-		
-			<ul>
-			  <li><input type="checkbox" id="cb1" />
-				<label for="cb1"><img src="http://lorempixel.com/100/100" /></label>
-			  </li>
-			  <li><input type="checkbox" id="cb2" />
-				<label for="cb2"><img src="http://lorempixel.com/101/101" /></label>
-			  </li>
-			  <li><input type="checkbox" id="cb3" />
-				<label for="cb3"><img src="http://lorempixel.com/102/102" /></label>
-			  </li>
-			  <li><input type="checkbox" id="cb4" />
-				<label for="cb4"><img src="http://lorempixel.com/103/103" /></label>
-			  </li>
-			</ul>
-			
-        <input type="submit" value="submit">
-		<form>
-	
-	</body>
+    <script src="../javascript/responsive-nav.js"></script>
+	<title>Furniture Type</title>
+</head>
+
+<body>
+    <nav>
+        <?php print_nav(); ?>
+    </nav>
+
+    <main>
+        <div class="page-container">
+
+            <div class="header-container">
+                <div class="title">
+                    <h1>Selecting the type of furniture</h1>
+                </div>
+				
+            </div>
+
+			<div class="selection-tool-container">		
+				<form action='' method="POST">
+					<!-- Exit button -->
+					<!-- TODO: Add to all selection screen in case they want to leave -->
+					<input class="btn" type="submit" value="Exit" name="exit">
+					<ul>
+						<!-- Radio buttons for furniture type selection -->
+						<li>
+							Table
+							<input type="radio" name="furniture-type" value="table" id="cb1" 
+								<?php 
+								if(isset($_SESSION['info']['furniture-type']) && ($_SESSION['info']['furniture-type']) == 'table') echo 'checked'; 
+								?>
+							/>
+							<label for="cb1"><img src="../images/furniture-samples/furniture-type/table.png" /></label>
+						</li>
+						<li>
+							Chair
+							<input type="radio" name="furniture-type" value="chair" id="cb2" 
+								<?php if(isset($_SESSION['info']['furniture-type']) && ($_SESSION['info']['furniture-type']) == 'chair') echo 'checked'; ?>
+							/>
+							<label for="cb2"><img src="../images/furniture-samples/furniture-type/chair.png" /></label>
+						</li>
+						<li>
+							Other
+							<input type="radio" name="furniture-type" value="other" id="cb3" 
+								<?php if(isset($_SESSION['info']['furniture-type']) && ($_SESSION['info']['furniture-type']) == 'other') echo 'checked'; ?>
+							/>
+							<label for="cb3"><img src="../images/furniture-samples/furniture-type/other.png" /></label>
+						</li>				  
+					</ul>
+
+					<!-- Navigation controls -->
+					<div class="nav-controls">
+						<input class="btn" type="submit" value="Next" name="request-start">
+					</div>
+				</form>
+			</div>
+		</div>
+    </main>
+
+    <footer>
+        <?php print_footer(); ?>
+    </footer>
+</body>
+
 </html>

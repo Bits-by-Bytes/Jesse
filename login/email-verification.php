@@ -17,12 +17,14 @@
         if (mysqli_affected_rows($conn) == 0)
         {
             die("Verification code failed.");
+			header( "refresh:2;url=login.php" );
+			die;
         }
  
         echo "<p>You can login now.</p>";
         header( "refresh:5;url=login.php" );
+		die;
     }
- 
 ?>
 
 <!DOCTYPE html>
