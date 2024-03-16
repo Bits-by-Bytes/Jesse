@@ -1,6 +1,13 @@
 <?php
-	$servername = "172.22.2.70";
-	$username = "jesse";
+	// whatever james has
+	//$servername = "172.22.2.70";
+	//$username = "jesse";
+	//$password = "Password1";
+	//$database = "projectox";
+
+	// test database
+	$servername = "localhost";
+	$username = "root";
 	$password = "Password1";
 	$database = "projectox";
 

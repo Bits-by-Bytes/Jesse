@@ -29,12 +29,6 @@
 		// echo '<pre>';
 		// print_r ($_SESSION['info']);
 		// echo '</pre>';
-	} elseif (isset($_POST['exit'])) {
-		// Unset session data on exit
-		unset($_SESSION['request-start']);
-		unset($_SESSION['info']);
-		header("location: index.php");
-		exit();
 	}
 ?>
 
@@ -49,6 +43,13 @@
 	
     <script src="../javascript/responsive-nav.js"></script>
 	<title>Furniture Type</title>
+
+	<style>
+ul li {
+	margin-top: 20px;}
+
+
+	</style>
 </head>
 
 <body>
@@ -61,19 +62,22 @@
 
             <div class="header-container">
                 <div class="title">
-                    <h1>Selecting the type of furniture</h1>
+                    <h1>Please Select the type of furniture you want: </h1>
                 </div>
 				
             </div>
 
-			<div class="selection-tool-container">		
-				<form action='' method="POST">
-					<!-- Exit button -->
+			<!-- whoever tried thanks but it should say if id go to dash if not then go to index which is done up in php <3 -->
+			<?php exit_selection(); ?><br>
+
+			<div class="selection-tool-container"  >		
+				<form action='' method="POST" >
+					
 					<!-- TODO: Add to all selection screen in case they want to leave -->
-					<input class="btn" type="submit" value="Exit" name="exit">
-					<ul>
+					
+					<ul >
 						<!-- Radio buttons for furniture type selection -->
-						<li>
+						<li >
 							Table
 							<input type="radio" name="furniture-type" value="table" id="cb1" 
 								<?php 
@@ -99,9 +103,11 @@
 					</ul>
 
 					<!-- Navigation controls -->
-					<div class="nav-controls">
+					<div class="nav-controls" >
+
 						<input class="btn" type="submit" value="Next" name="request-start">
 					</div>
+				
 				</form>
 			</div>
 		</div>

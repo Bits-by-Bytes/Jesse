@@ -1,13 +1,13 @@
 <?php
 
-$token = $_POST["token"];
+$token = $_GET["token"];
 
 $token_hash = hash("sha256", $token);
 
-$mysqli = require __DIR__ . "../common/checkConnection.php";
+$mysqli = require "../common/database.php";
 
-$sql = "SELECT * FROM user
-        WHERE reset_token_hash = ?";
+$sql = "SELECT * FROM login
+        WHERE RESET_TOKEN = ?";
 
 $stmt = $mysqli->prepare($sql);
 
@@ -23,38 +23,35 @@ if ($user === null) {
     die("token not found");
 }
 
-if (strtotime($user["reset_token_expires_at"]) <= time()) {
+if (strtotime($user["RESET_TOKEN_EXP"]) <= time()) {
     die("token has expired");
 }
 
-if (strlen($_POST["password"]) < 8) {
-    die("Password must be at least 8 characters");
-}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reset Password</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+<body>
 
-if ( ! preg_match("/[a-z]/i", $_POST["password"])) {
-    die("Password must contain at least one letter");
-}
+    <h1>Reset Password</h1>
 
-if ( ! preg_match("/[0-9]/", $_POST["password"])) {
-    die("Password must contain at least one number");
-}
+    <form method="post" action="process-reset-password.php">
 
-if ($_POST["password"] !== $_POST["password_confirmation"]) {
-    die("Passwords must match");
-}
+        <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
 
-$password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
+        <label for="password">New password</label>
+        <input type="password" id="password" name="password">
 
-$sql = "UPDATE user
-        SET password_hash = ?,
-            reset_token_hash = NULL,
-            reset_token_expires_at = NULL
-        WHERE id = ?";
+        <label for="password_confirmation">Repeat password</label>
+        <input type="password" id="password_confirmation"
+               name="password_confirmation">
 
-$stmt = $mysqli->prepare($sql);
+        <button>Send</button>
+    </form>
 
-$stmt->bind_param("ss", $password_hash, $user["id"]);
-
-$stmt->execute();
-
-echo "Password updated. You can now login.";
+</body>
+</html>

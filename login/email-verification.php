@@ -4,6 +4,7 @@
 	include("../common/checkconnection.php");
 	include("../common/functions.php");
  
+    $message = "";
 
     if (isset($_POST["verify_email"]))
     {
@@ -15,14 +16,12 @@
         $result  = mysqli_query($conn, $sql);
  
         if (mysqli_affected_rows($conn) == 0)
-        {
-            die("Verification code failed.");
-			header( "refresh:2;url=login.php" );
-			die;
+        { 
+            $message = 'Inccorect code!';
         }
  
-        echo "<p>You can login now.</p>";
-        header( "refresh:5;url=login.php" );
+        $message = 'Success! Redirecting you to login';
+        header( "refresh:3;url=login.php" );
 		die;
     }
 ?>
@@ -48,6 +47,7 @@
 			
 			<h1> Verify Email </h1>
 				<form method="POST">
+                    <?php echo $message ?>
 					<input type="hidden" name="email" value="<?php echo $_GET['email']; ?>" required>
 					<input type="text" name="verification_code" placeholder="Enter verification code" required />
 				 

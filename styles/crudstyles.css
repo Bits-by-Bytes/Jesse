@@ -1,0 +1,63 @@
+/* New CSS for the form */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.form-control {
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: blue; /* Green border color on focus */
+    outline: none;
+}
+
+/* New CSS for the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px; /* Added margin for better spacing */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-size: 16px; /* Bigger font size for headers */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light gray background for even rows */
+}
+
+.btn-table {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid black; /* Blue border color */
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: black; /* Blue text color */
+    font-weight: bold;
+    background-color: transparent; /* Transparent background */
+}
+
+.btn-table:hover {
+    transform: translateY(-2px); /* Move button slightly up on hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow on hover */
+}
+
+

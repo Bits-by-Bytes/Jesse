@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/selection-tool.css">
     <link rel="stylesheet" href="../styles/mystyles.css">
+    <link rel="stylesheet" href="../styles/dashboardStyles.css">
 
     <!-- Script for responsive navigation -->
     <script src="../javascript/responsive-nav.js"></script>
@@ -49,33 +50,35 @@
         <?php print_nav(); ?>
     </nav>
     <main>
-        <div class="page-container">
-            <!-- Header Section -->
-            <div class="header-container">
-                <div class="title">
+        <div class="container">	
+            <div class="dashboard">
+                <div class="left-div">
                     <h1>Start Building</h1>
+
+                    <!-- TODO: FIX THIS LAYOUT OF PAGE ITS BAD -->
+                            <form method="post" action="">
+                                <!-- Submit Button -->
+                                <input class="btn" style="width: 80%; height: 80px; font-size: 50px;" type="submit" value="Start" name="next">
+                            </form>
+
+
+                            
+                            <!-- TODO: FIX THIS LAYOUT OF PAGE ITS BAD -->
+                            <!-- TODO: Might want to make these buttons and just in case unset some stuff -->
+                            <!-- TODO: Breadcrumbs????? -->
+                            <h2>Have an Account?</h2>
+                            <a href='../login/login.php'>Log in here</a>
+                            <h2>Or signup</h2>
+                            <a href='../login/signup.php'>Sign up here</a>
+                </div>
+
+                <div class="right-div">
+                    <image src="../images/logos/bearded-ox.png"></image>
                 </div>
             </div>
-
-            <!-- Form Section -->
-            <div class="selection-tool-container">
-                <form action='' method="POST">
-                    <div class="nav-controls">
-
-                        <!-- Submit Button -->
-                        <input class="btn" type="submit" value="Start" name="next"><br><br><br><br>
-						
-						<!-- TODO: FIX THIS LAYOUT OF PAGE ITS BAD -->
-						<!-- TODO: Might want to make these buttons and just in case unset some stuff -->
-						<!-- TODO: Breadcrumbs????? -->
-						Have an Account?<br><br>
-						<a href='../login/login.php'>Log in here</a><br><br><br>
-						or Sign up<br><br>
-						<a href='../login/signup.php'>Sign up here</a><br>
-                    </div>
-                </form>
-            </div>
         </div>
+
+
     </main>
 
     <!-- Footer Section -->

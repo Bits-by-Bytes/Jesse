@@ -9,7 +9,7 @@
 		if (isset($_SESSION['id'])) {
 			header("location: confirm-send.php");
 		} else {
-			header("location: ../login/signup.php");
+			header("location: not-user.php");
 		}
 	}
 ?>
@@ -63,7 +63,7 @@
                     <h1>View Details</h1>
                 </div>
             </div>
-
+            <?php exit_selection(); ?><br>
             <div class="selection-tool-container">
                 <form method="POST" enctype="multipart/form-data">
                     <?php

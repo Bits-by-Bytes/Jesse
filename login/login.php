@@ -4,11 +4,13 @@
 	include("../common/checkconnection.php");
 	include("../common/functions.php");
 
+	$loginError = '';
+
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		// Something was posted
 		// I thought I was gonna need to do something else w/ POST
 		// but it works for some reason
-
+			
 			$email = $_POST["email"];
 			$password = $_POST["password"];
 			
@@ -19,35 +21,35 @@
 			// check if email even exists
 			if (!$result || mysqli_num_rows($result) == 0) 
 			{
-				echo("No Account with that Email.");
-			}
-			
+				$loginError = 'No Account with that Email.';
+			}			
 			else 
 			{
 				$user_data = mysqli_fetch_assoc($result);
 				
 				if(password_verify($password, $user_data['PWORD']))
 				{
-					$_SESSION['id'] = $user_data['CUST_ID'];			
+										
+					if ($user_data['VERIFIED_AT'] == null) {
+						echo 'You need to be verified';
+						header("Location: email-verification.php?email=" . $user_data['EMAIL']);
+					} else {
+						$_SESSION['id'] = $user_data['CUST_ID'];
+						
+						if (isset($_SESSION['started-request'])){
+							header("Location: ../selection-tool/confirm-send.php");
+						}else {
+							header("Location: ../dashboard/dashboard.php");
+						}
+					}
+
 				} 
 				else 
 				{
-					echo 'Incorrect Password';
+					$loginError = 'Not Valid Password!';
 				}
 				
-				
-				if ($user_data['VERIFIED_AT'] == null) {
-					echo 'You need to be verified';
-					header("Location: email-verification.php?email=" . $user_data['EMAIL']);
-				}
 			}
-			
-			if (isset($_SESSION['started-request'])){
-				header("Location: ../selection-tool/confirm-send.php");
-			}else {
-				header("Location: ../dashboard/dashboard.php");
-			}
-			die;
 		}	 
 ?>
 
@@ -73,9 +75,12 @@
                 <!-- Title -->
                 <h2>Login</h2><br>
                 <form method="POST">
+					<!-- Maybe make red for UI -->
+					<?php echo $loginError ?>
+					
                     <input type="text" name="email" placeholder="Email" required />
                     <input type="password" name="password" placeholder="Password" required /><br>
-                    <a href="signup.php">Sign up here</a> &nbsp;&nbsp;&nbsp;<a href='send-email.php'>Forgot Password?</a>
+                    <a href="signup.php">Sign up here</a> &nbsp;&nbsp;&nbsp;<a href='forgot-password.php'>Forgot Password?</a>
 					
 					<br><br>
 					<?php
@@ -84,13 +89,10 @@
 						if (isset($_SESSION['started-request'])){
 							echo '<a href="../selection-tool/confirmation.php">Back</a>';
 						}
-						if (isset($_GET['newpwd']) && 
-							$_GET['newpwd'] == 'passwordupdated'){
-							echo 'Password Reseted Log in!';
-						}
+					
 					?>
 					<br><br>
-                    <input type="submit" name="user" value="Submit" class="btn"><br><br>
+                    <input type="submit" name="user" value="Login" class="btn"><br><br>
                 </form>
 				
             </div>

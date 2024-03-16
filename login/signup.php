@@ -30,6 +30,7 @@
 	include("../common/functions.php");
 
 	$name = $email = $password = $passwordVerify = "";
+	$signupError = "";
 
 	$errCount = 0;
 
@@ -48,21 +49,20 @@
 		$uppercase = preg_match('@[A-Z]@', $password);
 		$lowercase = preg_match('@[a-z]@', $password);
 		$number    = preg_match('@[0-9]@', $password);
-		$specialChars = preg_match('@[^\w]@', $password);
 		
 		
 		// first error checks
-		if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
-			echo 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.';
+		if(!$uppercase || !$lowercase || !$number  || strlen($password) < 8) {
+			$signupError = 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.';
 			$errCount += 1;
 		} elseif ($passwordVerify !== $password) { // if the password verify and password does not match
-			echo 'Passwords do not match!';
+			$signupError = 'Passwords do not match!';
 			$errCount += 1;
 		} elseif ($result && mysqli_num_rows($result) > 0) { // Check if the email is already taken
-			echo "Email already exists";
+			$signupError = "Email already exists";
 			$errCount += 1;
 		} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // check for valid email
-			print "Invalid email format";
+			$signupError = "Invalid email format";
 			$errCount += 1;
 		}
 		
@@ -150,14 +150,8 @@
 				$mail->Body    = '<p>Your verification code is: \n <b style="font-size: 30px;">' . $verification_code . '</b></p>';
 	 
 				$mail->send();
-				echo 'Message has been sent';
-				} catch (Exception $e) {
-					echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-				}
-			
-			
-			
-			
+
+
 				// Hashes Password for security
 				$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 				
@@ -179,8 +173,12 @@
 				header("Location: email-verification.php?email=" . $email);
 				mysqli_close($conn);
 				die;
-			}
 
+
+				} catch (Exception $e) {
+					echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+				}
+		}
 	}
 ?>
 
@@ -206,19 +204,26 @@
 		  
 		  <form method="post">	
 		  <h2>Sign Up</h2><br><br>
+
+		  <?php
+		  // possible make it red
+				echo $signupError;
+			?>
 			<input type="text" name="name" placeholder="Name" value="" required>	  
 			<input type="text" name="email" placeholder="Email" value="<?php echo $email; ?>" required>
 			<input type="password" name="password" placeholder="Password" required>
 			<input type="password" name="passwordVerify" placeholder="Confirm Password" required><br><br>
+
+			<a href='login.php'>Log in here</a><br><br>
+			<input type="submit" value="Sign Up" name='verify_email' class="btn">
+
 			<?php
 				// if start request has started		
 						
 				if (isset($_SESSION['started-request'])){
-					echo '<a href="../selection-tool/confirmation.php">Back</a>';
+					echo '<a class="btn" href="../selection-tool/confirmation.php">Back</a>';
 				}
-			?>
-			<a href='login.php'>Log in here</a><br><br>
-			<input type="submit" value="Submit" class="btn">	
+			?>	
 		  </form>
 		</div>
 	  </div>		

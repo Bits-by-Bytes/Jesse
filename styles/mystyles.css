@@ -30,7 +30,7 @@ main {
   background-color: #333;
   text-align: center;
   transition: max-height 0.4s ease; /* Smooth transition for the nav */
-  max-height: 250px; 
+  max-height: 70px; 
   font-weight: bold;
   z-index: 1000; /* Ensure the navigation bar appears above other elements */
 
@@ -42,8 +42,8 @@ main {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 22px;
-line-height: 125px;
+  font-size: 18px;
+/* line-height: 125px; for the image */
 margin-left: 9px;
   
 }
@@ -62,7 +62,7 @@ margin-left: 9px;
    width: 145px; 
    margin-left: 200px;
     margin-right: 200px;
-     vertical-align: middle; 
+  vertical-align: middle; 
 }
 
 
@@ -78,11 +78,11 @@ margin-left: 9px;
   visibility: hidden;
   display:none;
 }
-
+/*
 .topnav {
-  height: 150px;
+  height: 50px;
 }
-
+*/
   .topnav a {
     display: none; 
   }
@@ -278,3 +278,7 @@ a:hover {
 .nav-controls a:hover {
   color: #ff6600;
 }
+
+
+
+

@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="../styles/mystyles.css">
     <script src="../javascript/responsive-nav.js"></script>
     <title>Table Shape</title>
+    <style>ul li { margin-top: 20px;}</style>
 </head>
 
 <body>
@@ -52,7 +53,7 @@
                     <h1>Select the table's shape</h1>
                 </div>
             </div>
-
+            <?php exit_selection(); ?><br>
             <div class="selection-tool-container">
                 <form method="POST">
                     <ul>

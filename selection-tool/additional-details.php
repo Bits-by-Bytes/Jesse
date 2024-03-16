@@ -54,7 +54,7 @@
                     <h1>Add any more details</h1>
                 </div>
             </div>
-
+            <?php exit_selection(); ?><br>
             <div class="selection-tool-container">
                 <form method="POST" enctype="multipart/form-data">
                     <!-- Textarea for additional details -->

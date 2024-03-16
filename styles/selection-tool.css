@@ -5,6 +5,7 @@ ul {
 
 li {
   display: inline-block;
+  margin-top: 20px;
 }
 
 /* Hide radio buttons */
@@ -18,7 +19,7 @@ label {
   position: relative;
   margin: 10px;
   padding: 10px;
-  border: 1px solid orange;
+  border: 5px solid orange;
   border-radius: 55px;
   cursor: pointer;
 }
@@ -44,8 +45,8 @@ label:before {
 
 /* Image styling */
 label img {
-  width: 250px;
-  height: 250px;
+  width: 220px;
+  height: 220px;
   border-radius: 10px;
   transition-duration: 0.5s;
   transform-origin: 50% 50%;
@@ -76,13 +77,6 @@ label img {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-}
-
-/* Black box */
-.black-box {
-  width: 150px;
-  height: 50px;
-  background-color: black;
 }
 
 /* Navigation controls */

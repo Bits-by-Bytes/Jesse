@@ -1,24 +1,25 @@
 <?php
-// TODO: will change signup to this as well!
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+    // TODO: will change signup to this as well!
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
 
-require __DIR__ . "../vendor/autoload.php";
+    require '../vendor/autoload.php';
 
-$mail = new PHPMailer(true);
+    $mail = new PHPMailer(true);
 
-// $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 
-$mail->isSMTP();
-$mail->SMTPAuth = true;
+    $mail->isSMTP();
+    $mail->SMTPAuth = true;
 
-$mail->Host = 'smtp.gmail.com';
-$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-$mail->Port = 587;
-$mail->Username = 'jesse.vanschothorst@gmail.com';
-$mail->Password = 'tcfzcsiouqzsnnes';
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port = 587;
+    $mail->Username = 'jesse.vanschothorst@gmail.com';
+    $mail->Password = 'tcfzcsiouqzsnnes';
 
-$mail->isHtml(true);
+    $mail->isHtml(true);
 
-return $mail;
+    return $mail;
+?>

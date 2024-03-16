@@ -91,7 +91,7 @@
                     <h1>Select the epoxy color</h1>
                 </div>
             </div>
-
+            <?php exit_selection(); ?><br>
             <!-- Form Section -->
             <div class="selection-tool-container">
                 <form method="POST">

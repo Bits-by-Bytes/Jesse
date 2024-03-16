@@ -143,12 +143,16 @@
     </nav>
 
     <main>
+	
         <div class="page-container">
+		
             <div class="header-container">
                 <div class="title">
-                    <h1>Send Request</h1>
+                    <h1>Comfirm Request</h1>
                 </div>
+			
             </div>
+			<?php exit_selection(); ?><br>
             <div class="selection-tool-container">
                 <form method="POST" enctype="multipart/form-data">
                     <?php
@@ -170,7 +174,7 @@
 
                     <div class="nav-controls">
                         <a href="confirmation.php">Previous</a>
-                        <input class="btn" type="submit" value="Send Request" name="send-request">
+                        <input class="btn" type="submit" value="confirm & Send Request" name="send-request">
                     </div>
                 </form>
             </div>

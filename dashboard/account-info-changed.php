@@ -21,7 +21,7 @@
     <style>
         /*  drop down menu css   */
         #drop {
-            position: absolute;
+            position: flex;
             top: 70px; 
             right: 50px; 
             z-index: 999;
@@ -30,13 +30,13 @@
         ul {
             list-style: none;
             background: #21201d;
-            width: 175px;
+            width: 150px;
             border-radius: 4px;
         }
 
         ul li {
             display: block;
-            position: relative;
+            position: flex;
             border-radius: 15px;
         }
 
@@ -74,7 +74,7 @@
             padding: 20px;
             background-color: #f2f2f2;
             border-radius: 10px;
-            width: 70%;
+            width: 100%;
             margin-left: auto;
             margin-right: auto;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);

@@ -1,15 +1,6 @@
 <?php 
-	session_start();
 
-	include("../common/checkconnection.php");
 	include("../common/functions.php");
-	
-	$user_data = check_Login($conn);
-	
-	// get record related to Cust_ID
-	// Let user fill in stuffz
-	// Update the customer table/create?
-	
 	
 ?>
 
@@ -31,8 +22,8 @@
   <main>
 	<div class="about-us">
 		  <h1>WORK IN PROGRESS</h1>
-		  <p>Be able to manage/see/view/edit orders</p>
-		  <a href="../dashboard/dashboard.php" class="btn">To Dash</a>
+		  <p>Password will be able to get reset here</p>
+		  <a href="send-email.php" class="btn">To login</a>
 	</div>	  
   </main>
 
