@@ -13,6 +13,15 @@ input[type="radio"][id^="cb"] {
   display: none;
 }
 
+form {
+  margin: 0 auto;
+  width:1200px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 /* Label styling for selection tool */
 label {
   display: block;
@@ -85,7 +94,4 @@ label img {
   margin-bottom: 30px;
 }
 
-/* Selection tool container */
-.selection-tool-container {
-  margin-bottom: 50px;
-}
+

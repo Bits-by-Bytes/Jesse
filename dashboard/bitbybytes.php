@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="../styles/mystyles.css">
 	<script src="../javascript/responsive-nav.js"></script>
-
+    <link rel="icon" type="image/x-icon" href="../images/favi.png">
 </head>
 <body>
   <nav>
@@ -22,9 +22,9 @@
   <main>
 	<div class="about-us">
 		  <h1>BITS BY BYTES</h1>
-		  <p>Computer Information Technology, Lethbridge College, 2024</p>
-		  <p>Alex Pham, Gradi Mbatika, James Haro, Jesse Van Schothorst, Skyler Black</p>
-		  <a href="../login/login.php" class="btn">To login</a>
+		  <p>Computer Information Technology, Lethbridge College, 2023-2024</p>
+		  <p>Alexander Pham, Gradi Mbatika, James Haro, Jesse Van Schothorst, Skyler Black</p>
+		  <a href="../selection-tool/index.php" class="btn">To Start</a>
 	</div>	  
   </main>
 

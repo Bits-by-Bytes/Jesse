@@ -1,5 +1,5 @@
 <?php
-
+// i think this is same as checkConnetction
 $host = "localhost";
 $username = "root";
 $password = "Password1";

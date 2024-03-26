@@ -1,7 +1,6 @@
 .container {
     margin: 0 auto;
     width: 100%;
-    max-width: 1200px;
     padding: 0 20px; /* Optional: Add padding to the sides for better readability */
     box-sizing: border-box; /* Ensure padding is included in width calculation */
 }
@@ -23,8 +22,16 @@
     align-items: center;
 }
 
+
 .welcomeContainer {
     flex: 1; /* Updated to take up 50% */
+
+
+}
+
+.welcomeContainer H1 {
+    font-size: 50;
+
 }
 
 .dropdownContainer {
@@ -54,28 +61,28 @@
     position: absolute;
     right: 0;
     background-color: #333; /* Background color for dropdown menu */
-    min-width: 200px; /* Adjusted minimum width */
-    padding: 10px 0; /* Increased padding */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    min-width: 200px; 
+    padding: 10px 0; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
     z-index: 1;
-    border-radius: 8px; /* Rounded corners */
-    transition: opacity 0.3s; /* Smooth fade-in effect */
+    border-radius: 8px; 
+    transition: opacity 0.3s; 
     font-size: 18px;
 }
 
 
 .dropdown-content a {
-    color: white; /* Text color for dropdown links */
+    color: white; 
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+    transition: background-color 0.3s, color 0.3s; 
     
 }
 
 .dropdown-content a:hover {
-    background-color: #444; /* Darker background on hover */
-    color: white; /* Text color change on hover */
+    background-color: #444; 
+    color: white; 
 }
 
 
@@ -154,7 +161,8 @@ form h2 {
 
 /* Update input styling */
 .input-group input[type="text"],
-.input-group input[type="email"] {
+.input-group input[type="email"],
+.input-group input[type="tel"] {
     width: 100%;
     padding: 15px; /* Increase padding for better appearance */
     border: 2px solid #e0e0e0; /* Lighter border color */
@@ -166,7 +174,8 @@ form h2 {
 
 /* Hover effect for inputs */
 .input-group input[type="text"]:focus,
-.input-group input[type="email"]:focus {
+.input-group input[type="email"]:focus,
+.input-group input[type="tel"]:focus {
     outline: none;
     border-color: #007bff; /* Change border color on focus */
 }
@@ -180,5 +189,3 @@ form h2 {
 .input-group input::placeholder {
     color: #999999; /* Lighter placeholder color */
 }
-
-

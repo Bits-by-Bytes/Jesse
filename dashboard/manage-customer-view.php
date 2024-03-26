@@ -45,25 +45,35 @@ $resultSet = mysqli_query($conn, $sqlQuery);
     <link rel="stylesheet" href="../styles/mystyles.css">
     <link rel="stylesheet" href="../styles/crudstyles.css">
     <link rel="stylesheet" href="../styles/dashboardStyles.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <link rel="icon" type="image/x-icon" href="../images/favi.png">
+
     <script src="../javascript/responsive-nav.js" defer></script>
+    <style>
+    /* Adjust the table to take up full width */
+        #table_wrapper {
+            width: 100%;
+            margin: 10px;
+        }
+        #table {
+            width: 100%;
+        }
+        </style>
 </head>
 <body>
 <nav>
     <?php print_nav(); ?>
+    <?php print_navDash($accountType);?>
 </nav>
 
 <div class="container">
     <div class="dashboard">
         <div class="header">
         <div class="welcomeContainer"><h1>Manage Customer Orders</h1></div>
-            <div class="dropdownContainer"><?php print_dropdown($accountType); ?></div>
+        <a class="btn" style="float: left;" href="manage-customer.php">Back to customer list</a><br>
         </div>
 
-        <a class="btn" href="manage-customer.php">Back to customer list</a><br>
-
-        <h1>Customer: <b><?php echo $user['FNAME']; ?></b></h1>
-
-        <table class="table">
+        <table class="table" style="margin: 10px;">
             <tbody>
             <tr>
                 <th>First Name:</th>
@@ -84,36 +94,44 @@ $resultSet = mysqli_query($conn, $sqlQuery);
             </tbody>
         </table>
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th>ID</th>
+ <!-- Table setup -->
+ <div id="table_wrapper">
+                <table id="table">
+                    <thead>
+                        <tr>
+                        <th>ID</th>
                 <th>ORD DATE</th>
                 <th>STATUS</th>
                 <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php while ($cust = mysqli_fetch_assoc($resultSet)): ?>
-                <tr>
-                    <td><?php echo $cust['ORDER_ID']; ?></td>
-                    <td><?php echo $cust['ORD_DATE']; ?></td>
-                    <td><?php echo $cust['STATUS']; ?></td>
-                    <td>
-                        <a href="manage-order-view.php?cust_id=<?php echo $cust['CUST_ID']; ?>&order_id=<?php echo $cust['ORDER_ID']; ?>&source=manage_customer_view" class="btn-table">View</a>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-            </tbody>
-        </table>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($cust = mysqli_fetch_assoc($resultSet)): ?>
+                            <tr>
+                                <td><?php echo $cust['ORDER_ID']; ?></td>
+                                <td><?php echo $cust['ORD_DATE']; ?></td>
+                                <td><?php echo $cust['STATUS']; ?></td>
 
-        <a class="btn" href="manage-customer.php">Back to customer list</a>
+                                <td>
+                                    <a href="manage-order-view.php?cust_id=<?php echo $cust['CUST_ID']; ?>&order_id=<?php echo $cust['ORDER_ID']; ?>&source=manage_customer_view" class="btn-table">View</a>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
     </div>
 </div>
 
 <footer>
     <?php print_footer(); ?>
 </footer>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#table').DataTable();
+        });
+    </script>
 </body>
 </html>

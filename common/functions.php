@@ -27,7 +27,7 @@ function check_login($conn)
 
 }
 
-// Displays the nav
+// Displays the main nav
 // good so we only have to change it in one spot
 // for images and link make sure location of file is in folder
 function print_nav()
@@ -39,6 +39,7 @@ function print_nav()
 	
 		  <a href="https://www.thebeardedox.ca/">HOME</a>
 		  <a href="https://www.thebeardedox.ca/who-we-are">WHO WE ARE</a>
+		  <a href="https://www.thebeardedox.ca/gallery">GALLERY</a>
 		  <a href="https://www.thebeardedox.ca/blog">BLOG</a>
 		   
 
@@ -62,6 +63,91 @@ function print_nav()
 //  <a href="https://www.thebeardedox.ca/getintouch">	CART </a> may be confusing
 //<image class="beardedOxLogo"  src="../images/logos/bearded-ox.png"></image> 
 
+function print_navDash($accountType)
+{    
+    print '<nav class="topnav1" id="myTopnav1">
+	<a href="dashboard.php">Dash</a>
+
+                ';
+
+    if ($accountType == "ADMIN") {
+        echo '
+                    <a href="manage-customer.php">Manage Customers</a>
+                    <a href="manage-order.php">Manage Orders</a>
+                    <a href="manage-files.php">View Specs</a>';
+	} else {
+		echo '
+			<a href="account-Information.php">Account Information</a>
+			<a href="manage-order.php">Manage Order</a>
+		';			
+    }
+
+
+	echo '<script>
+		window.onscroll = function() {myFunction()};
+
+		var navbar = document.getElementById("myTopnav1");
+		var sticky = navbar.offsetTop;
+
+		function myFunction() {
+		if (window.pageYOffset >= sticky) {
+			navbar.classList.add("sticky")
+		} else {
+			navbar.classList.remove("sticky");
+		}
+		}
+		</script>';
+        
+}
+
+
+function print_navTool($accountType)
+{    
+    print '<nav class="topnav1" id="myTopnav1">
+	
+
+                ';
+
+				if ($accountType == "ADMIN") {
+					echo '
+					<a href="../dashboard/dashboard.php">Dash</a>
+								<a href="../dashboard/manage-customer.php">Manage Customers</a>
+								<a href="../dashboard/manage-order.php">Manage Orders</a>
+								<a href="../dashboard/manage-files.php">Manage Tool</a>';
+				} elseif ($accountType == "selection"){
+echo "You are not signed in";
+				} else {
+					echo '
+					<a href="../dashboard/dashboard.php">Dash</a>
+					<a href="../dashboard/account-Information.php">Account Information</a>
+					<a href="../dashboard/manage-order.php">Manage Order</a>
+					';			
+				}
+
+
+			// for the sticky nav!	got from w3
+	echo '<script>
+	window.onscroll = function() {myFunction()};
+
+	var myTopnav1 = document.getElementById("myTopnav1");
+	var sticky = myTopnav1.offsetTop;
+
+	function myFunction() {
+	if (window.pageYOffset >= sticky) {
+		myTopnav1.classList.add("sticky")
+	} else {
+		myTopnav1.classList.remove("sticky");
+	}
+	}
+	</script>';
+        
+}
+
+
+
+
+
+
 // Displays the footer
 // good so we only have to change it in one spot
 function print_footer()
@@ -73,7 +159,44 @@ function print_footer()
 			<p class="bold-footer">Let’s Build Beautiful Things Together</p>
 			
 			<!-- Might change to our login page? -->
-			<a href="https://www.thebeardedox.ca/getintouch" class="btn">Start Now</a>
+			<a href="../selection-tool/furniture-type.php" class="btn">Start Now</a>
+			
+		  </div>
+		  <div class="socials">
+			<a href="https://www.instagram.com/beardedoxtimber/"><i class="fa fa-instagram"></i> Instagram</a>
+			<a href="https://www.facebook.com/beardedoxtimber/"><i class="fa fa-facebook"></i> Facebook</a>
+		  </div>
+		  <div class="bottom-footer-container">
+			<div class="left-footer">
+			  
+			  <p>©2021 The Bearded Ox Timber Co.</p><p> ALL RIGHTS RESERVED - <a href="https://www.thebeardedox.ca/legal" >LEGAL</a></p>
+			  <p> Bits by Bytes - <a href="../dashboard/bitbybytes.php">About Us</a></p>
+			</div>
+			<div class="middle-footer">
+			  <image src="../images/logos/bearded-ox-timber.png
+			  
+			  "></image>
+			</div>
+			<div class="right-footer">
+			  <p>Custom Built furniture - Custom Milled Lumber</p>
+			  <p>The Bearded Ox</p>
+			  <p>116 Kenyon Drive, Lethbridge, Alberta, T1K7N3</p>
+			</div>
+		  </div>
+		</div>
+		
+		';
+}
+
+function print_footer1()
+{
+	echo '  
+	  
+		<div class="footer">
+		  <div class="footer-content">
+			<p class="bold-footer">Let’s Build Beautiful Things Together</p>
+			
+			<!-- Might change to our login page? -->
 			
 		  </div>
 		  <div class="socials">
@@ -103,40 +226,20 @@ function print_footer()
 }
 
 
-
+// logout function (lazy)
 function print_dropdown($accountType)
 {
 echo '
 
 <div class="dropdown" style="float:right;">
-	<button class="dropbtn">Menu</button>
-	<div class="dropdown-content">';
-
-	if ($accountType == "ADMIN") {
-		echo "
-			<a href=\"manage-customer.php\">Manage Customers</a>
-			<a href=\"manage-order.php\">Manage Orders</a>
-			<a href=\"stub-manage-customer.php\">Inbox</a>
-		";      
-	} else {
-		echo "
-			<a href=\"account-Information.php\">Account Information</a>
-			<a href=\"manage-order.php\">Manage Orders</a>
-			<a href=\"stub-inbox.php\">Inbox</a>
-		";
-	}
-	
-	echo '<a href="../login/logout.php">Log out</a>
-	</div>
+	<a href="../login/logout.php" class="dropbtn">Logout</a>;	
 </div>
 
 ';
 
-
-
-
 }
-
+//<a href=\"stub-manage-customer.php\">Inbox</a>
+//<a href=\"stub-inbox.php\">Inbox</a>
 
 function exit_selection() 
 {
@@ -144,6 +247,7 @@ function exit_selection()
         // Unset session data on exit
         unset($_SESSION['request-start']);
         unset($_SESSION['info']);
+		unset($_SESSION['stored_info']);
 
         if (isset($_SESSION['id'])) {
             // If the user is logged in, redirect to the dashboard
@@ -156,7 +260,6 @@ function exit_selection()
         exit(); // Exit the script to prevent further execution
     }
 
-    // If 'return' is not set, display a button to return home
 
 	
 	if (isset($_SESSION['id'])) {
@@ -164,7 +267,7 @@ function exit_selection()
 		echo 
 		"
 		<form method='post' action=''>
-			<button class='btn' type='submit' name='return'>Return to Home</button>
+			<button class='btn' type='submit' name='return'>Return to Dash</button>
 		</form>
 		";
 	} else {

@@ -28,16 +28,19 @@
 <!DOCTYPE html>
 <html>
 <head>	
-    <title>Login</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/mystyles.css">
     <link rel="stylesheet" href="../styles/dashboardStyles.css">
+    <link rel="icon" type="image/x-icon" href="../images/favi.png">
     <script src="../javascript/responsive-nav.js"></script>
 </head>
 
 <body>
     <nav>
         <?php print_nav(); ?>
+        <?php print_navDash($accountType);?>
+        
     </nav>
 
     <main>
@@ -50,24 +53,28 @@
                 </div>
                 <div class="left-div">
 				<?php
-					/* TODO: create own css for this page for better look!  */
+					
 					// could be put into a function!
 					if ($accountType == 'ADMIN') {
                         
 						echo '
 							<a  href="manage-customer.php"> Manage Customers </a><br>
 							<a  href="manage-order.php"> Manage Orders </a><br>
-							<a  href="stub-inbox.php"> Inbox </a><br>
+                            <a  href="manage-files.php"> View Specs </a><br>
+							
 						';
+                        //<a  href="stub-inbox.php"> Inbox </a><br>
                 	
 					} else {
 						echo '
 							<a type="button" href="../selection-tool/furniture-type.php"> Start Request </a><br>
 							<a type="button" href="manage-order.php"> Manage Orders </a><br>
-							<a type="button" href="stub-inbox.php"> Inbox     </a><br><Br>';
+                            <a type="button" href="account-information.php"> Account Information </a><br>
+							';
     
-					}
+					}//<a type="button" href="stub-inbox.php"> Inbox     </a><br><Br>
 				?>
+                
                 </div>
 
                 <div class="right-div">

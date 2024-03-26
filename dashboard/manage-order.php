@@ -19,12 +19,14 @@ $userId = isset($_GET['cust_id']) ? $_GET['cust_id'] : null; // Check if cust_id
 $user = getUserById($conn, $userId);
 
 if ($accountType == 'ADMIN') {
+    // if admin they see everyone!
     $sqlQuery = "SELECT c.FNAME, c.LNAME, l.EMAIL, o.* 
     FROM `order` o 
     INNER JOIN customer c ON o.CUST_ID = c.CUST_ID 
     INNER JOIN login l ON c.CUST_ID = l.CUST_ID
     ORDER BY o.ORD_DATE DESC";
 } else {
+    // if user they only see there stuff
     $sqlQuery = "SELECT c.FNAME, c.LNAME, l.EMAIL, o.* 
     FROM `order` o 
     INNER JOIN customer c ON o.CUST_ID = c.CUST_ID 
@@ -51,26 +53,40 @@ $resultSet = mysqli_query($conn, $sqlQuery);
     <link rel="stylesheet" href="../styles/mystyles.css">
     <link rel="stylesheet" href="../styles/crudstyles.css">
     <link rel="stylesheet" href="../styles/dashboardStyles.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <link rel="icon" type="image/x-icon" href="../images/favi.png">
+    <style>
+    /* Adjust the table to take up full width */
+        #table_wrapper {
+            width: 100%;
+            margin: 20px;
+        }
+        #table {
+            width: 100%;
+        }
+        </style>
     <script src="../javascript/responsive-nav.js" defer></script>
 </head>
 <body>
 <nav>
     <?php print_nav(); ?>
+    <?php print_navDash($accountType);?>
 </nav>
 
 <div class="container">
     <div class="dashboard">
         <div class="header">
             <div class="welcomeContainer"><h1>Manage Order</h1></div>
-            <div class="dropdownContainer"><?php print_dropdown($accountType); ?></div>
+            <a class="btn" href="dashboard.php" style="margin-bottom:10px;">Back to dashboard</a>
         </div>
 
-        <a class="btn" href="dashboard.php" style="margin-bottom:10px;">Back to dashboard</a>
+        
 
-        <table class="table">
+        <table class="table" id="table">
             <thead>
             <tr>
             <?php
+                // dont remember why i put this here
                     if ($accountType == "ADMIN"){
                             echo  '            
                             <th>First Name</th>
@@ -105,19 +121,30 @@ $resultSet = mysqli_query($conn, $sqlQuery);
                     <td><?php echo $row['STATUS']; ?></td>
                     <td>
                         <a href="manage-order-view.php?cust_id=<?php echo $row['CUST_ID']; ?>&order_id=<?php echo $row['ORDER_ID']; ?>&source=manage_order" class="btn-table">View</a>
+                        <?php
+                            if ($accountType == "ADMIN"){
+                                echo '<a href="update.php?cust_id=' . $row['CUST_ID'] . '&order_id=' . $row['ORDER_ID'] . '&source=manage_order" class="btn-table">Update</a>';
+                            }
+                        ?>
                     </td>
                 </tr>
             <?php endwhile; ?>
             </tbody>
         </table>
 
-        <a class="btn" href="dashboard.php">Back to dashboard</a>
+        
     </div>
 </div>
 
 <footer>
     <?php print_footer(); ?>
 </footer>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#table').DataTable();
+        });
+    </script>
 </body>
 </html>

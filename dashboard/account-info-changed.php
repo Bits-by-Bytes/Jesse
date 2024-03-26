@@ -6,8 +6,9 @@
     
     // get login for acc_type to display user or admin
     $user_data = check_Login($conn);
+    $accountType = $user_data['ACC_TYPE']; 
 	
-	header( "refresh:5;url=account-information.php" );
+	header( "refresh:3;url=account-information.php" );
 
 ?>
 
@@ -18,6 +19,7 @@
     <title>Change Account Information</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/mystyles.css">
+    <link rel="icon" type="image/x-icon" href="../images/favi.png">
     <style>
         /*  drop down menu css   */
         #drop {
@@ -112,7 +114,8 @@
 
 <body>
     <nav>
-        <?php print_nav(); ?>
+    <?php print_nav(); ?>
+        <?php print_navDash($accountType);?>
     </nav>
         
     <main>    

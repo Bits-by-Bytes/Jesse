@@ -30,6 +30,25 @@ function getSpecsById($conn, $specsId) {
     $result = mysqli_query($conn, $query);
     return $result ? mysqli_fetch_assoc($result) : null;
 }
+function getImagesBySpecsId($conn, $specs_id) {
+    $images = array();
+
+    // Prepare and execute SQL query
+    $query = "SELECT * FROM `images` WHERE SPECS_ID = '$specs_id'";
+    $result = mysqli_query($conn, $query);
+
+    // Fetch associative array of images
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $images[] = $row;
+        }
+        mysqli_free_result($result);
+    } else {
+        echo "Error retrieving images: " . mysqli_error($conn);
+    }
+
+    return $images;
+}
 
 // Check if user is logged in and get user data
 $user_data = check_Login($conn);
@@ -83,32 +102,47 @@ if ($source === 'manage_order') {
     <link rel="stylesheet" href="../styles/mystyles.css">
     <link rel="stylesheet" href="../styles/crudstyles.css">
     <link rel="stylesheet" href="../styles/dashboardStyles.css">
+    <link rel="icon" type="image/x-icon" href="../images/favi.png">
+
     <style>
         .export-button-container {
             text-align: right;
             margin-bottom: 10px;
         }
+        /* CSS to style images */
+.image-container {
+    margin-top: 10px;
+}
+
+.image-container img {
+    max-width: 200px; /* Set maximum width for the images */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Add some space between images */
+}
+
     </style>
 </head>
 <body>
 <nav>
     <?php print_nav(); ?>
+    <?php print_navDash($accountType);?>
 </nav>
 <div class="container">
     <div class="dashboard">
         <div class="header">
             <div class="welcomeContainer"><h1>Manage Order</h1></div>
-            <div class="dropdownContainer"><?php print_dropdown($accountType); ?></div>
+            <a href="<?php echo $back_link; ?>" class="btn">Back</a>
         </div>
-        <a href="<?php echo $back_link; ?>" class="btn">Back</a>
+        
+        <h1>Customer: <b><?php echo $user['FNAME'] ?></b></h1>
         <div class="export-button-container">
-            <a href="export.php?id=<?php echo $orderId; ?>" class="btn btn-primary">Export</a>
+            <a href="export.php?id=<?php echo $orderId; ?>" class="btn btn-primary">Print</a>
         </div>
    
        
-                <h1>Customer: <b><?php echo $user['FNAME'] ?></b></h1>
+                
           
-            <table class="table">
+            <table class="table" style="margin: 10px;">
                 <tbody>
                     <tr>
                         <th>Order ID:</th>
@@ -120,39 +154,70 @@ if ($source === 'manage_order') {
                     </tr>
                     <tr>
                         <th>Order Status:</th>
-                        <td><?php echo $order['STATUS']?></td>
+                        <td><?php echo $order['STATUS']?>
+                    
+                    
+                        <?php
+                    
+                    if ($accountType == "ADMIN"){
+                        echo '<a href="update.php?cust_id=' . $userId . '&order_id=' . $orderId. '&source=manage_order" class="btn-table">Update</a>';
+                    }
+                ?>
+                    
+                    </td>
                     </tr>
+
                 </tbody>
+                
+
+               
             </table>
+
 
         
             <?php if (!empty($productOrders)): ?>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Product ID</th>
                             <th>Specs</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($productOrders as $prodOrder): ?>
                             <tr>
-                                <td><?php echo $prodOrder['PROD_ID']; ?></td>
                                 <td>
-                                    <?php
+                             
+                                <?php
                                     $specs = getSpecsById($conn, $prodOrder['SPECS_ID']);
                                     if ($specs) {
-                                        echo "Furniture Type: " . $specs['FURNI_TYPE'] . "<br>";
-                                        echo "Species: " . $specs['SPECIES'] . "<br>";
-                                        echo "Live Edge: " . $specs['LIVE_EDGE'] . "<br>";
-                                        echo "Base Styles: " . $specs['BASE_STYLES'] . "<br>";
-                                        echo "Epoxy Option: " . $specs['EPOXY_OPTION'] . "<br>";
-                                        echo "Epoxy Style: " . $specs['EPOXY_STYLE'] . "<br>";
-                                        echo "Epoxy Type: " . $specs['EPOXY_TYPE'] . "<br>";
-                                        echo "Epoxy Color: " . $specs['EPOXY_COLOR'] . "<br>";
-                                        echo "Additional Details: " . $specs['ADD_DETAILS'] . "<br>";
+                                        echo "Furniture Type: " . htmlspecialchars($specs['FURNI_TYPE']) . "<br>";
+                                        echo "Table Shape: " . htmlspecialchars($specs['TABLE_SHAPE']) . "<br>";
+                                        echo "Table Base: " . htmlspecialchars($specs['BASE_STYLES']) . "<br>";
+                                        echo "Wood Type: " . htmlspecialchars($specs['SPECIES']) . "<br>";
+                                        echo "Edge Type: " . htmlspecialchars($specs['EDGE_TYPE']) . "<br>";
+                                        echo "Epoxy Option: " . htmlspecialchars($specs['EPOXY_OPTION']) . "<br>";
+                                        echo "Epoxy Color: " . htmlspecialchars($specs['EPOXY_COLOR']) . "<br>";
+                                        echo "Epoxy Style: " . htmlspecialchars($specs['EPOXY_STYLE']) . "<br>";
+                                        echo "Epoxy Type: " . htmlspecialchars($specs['EPOXY_TYPE']) . "<br>";
+                                        echo "Length: " . htmlspecialchars($specs['LENGTH']) . "<br>";
+                                        echo "Width: " . htmlspecialchars($specs['WIDTH']) . "<br>";
+                                        echo "Height: " . htmlspecialchars($specs['HEIGHT']) . "<br>";
+                                        echo "Additional Details: " . htmlspecialchars($specs['ADD_DETAILS']) . "<br>";
+
+                                        // Display associated images
+                                        $images = getImagesBySpecsId($conn, $specs['SPECS_ID']);
+                                        if ($images) {
+                                            echo "<div class='image-container'>";
+                                            foreach ($images as $image) {
+                                                echo "<img src='" . htmlspecialchars($image['IMG_PATH']) . "' alt='Associated Image'>";
+                                            }
+                                            echo "</div>";
+                                        }
                                     }
                                     ?>
+
+
+
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -162,7 +227,7 @@ if ($source === 'manage_order') {
                 <p>No product Details found for this order</p>
             <?php endif; ?>
        
-            <a href="<?php echo $back_link; ?>" class="btn">Back</a>
+            
     </div>
 </div>
 <footer>

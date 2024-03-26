@@ -3,36 +3,37 @@
 
     include("../common/checkconnection.php");
     include("../common/functions.php");
-    
-    // get login for acc_type to display user or admin
-    // check if it is a valid user in in check_login
-    // gets id for later if needed
+
+
     $user_data = check_Login($conn);
     $id = $user_data['CUST_ID']; 
 	$accountType = $user_data['ACC_TYPE']; 
-    
-    // Get first name for the user
-    $query = "SELECT FNAME FROM customer WHERE CUST_ID = '$id' LIMIT 1";
-    $result = mysqli_query($conn, $query);
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $fname = $row['FNAME'];
-    } else {
-        $fname = ''; // handle the case when no data is found
-    }
-
-	$sqlQuery = "SELECT * FROM customer";
-
-    // Checks for any of the switch
+    // Check if a search query parameter is provided
+    $search = '';
     if(isset($_GET['search']) && !empty($_GET['search'])) {
         $search = mysqli_real_escape_string($conn, $_GET['search']);
-        // Add search condition to SQL query
-        $sqlQuery .= " WHERE FNAME LIKE '%$search%'";
     }
 
-    // Execute the SQL query
-    $resultSet = mysqli_query($conn, $sqlQuery);
+    // Define the directories where the images are stored
+    $imageDirectories = array(
+        "../images/furniture-samples/",
+        "../images/furniture-samples/edge-type/",
+        "../images/furniture-samples/epoxy-option/",
+        "../images/furniture-samples/furniture-type/",
+        "../images/furniture-samples/table-shape-opt/",
+        "../images/furniture-samples/wood-type/",
+        
+    );
+
+    // Fetch all image files in the directories
+    $imageFiles = array();
+    foreach ($imageDirectories as $directory) {
+        $files = glob($directory . "*.{jpg,jpeg,png,gif}", GLOB_BRACE);
+        if ($files) {
+            $imageFiles = array_merge($imageFiles, $files);
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +41,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Login</title>
+    <title>Image Directory</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -58,6 +59,10 @@
         #table {
             width: 100%;
         }
+        .image-cell img {
+            max-width: 200px;
+            max-height: 150px;
+        }
     </style>
 </head>
 
@@ -70,39 +75,29 @@
     <div class="container">
         <div class="dashboard">
             <div class="header">
-                <div class="welcomeContainer"><h1>Manage Customers </h1></div>
+                <div class="welcomeContainer"><h1>Image Directory</h1></div>
                 <a class="btn" style="float: right" href="../dashboard/dashboard.php">Back to dashboard</a>
                 
             </div>
-           
-            
             
             <!-- Table setup -->
             <div id="table_wrapper">
                 <table id="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Last name</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-                            <th>Actions</th>
+                            <th>Image Name</th>
+                            <th>Image</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($cust = mysqli_fetch_assoc($resultSet)): // gets the values related to the customer for admin view?>
-                            <tr>
-                                <td><?php echo $cust['CUST_ID']; ?></td>
-                                <td><?php echo $cust['FNAME']; ?></td>
-                                <td><?php echo $cust['LNAME']; ?></td>
-                                <td><?php echo $cust['PHONE']; ?></td>
-                                <td><?php echo $cust['ADDRESS']; ?></td> 
-                                <td>
-                                    <a href="manage-customer-view.php?cust_id=<?php echo $cust['CUST_ID'] ?>" class="btn-table">View</a>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
+                        <?php foreach ($imageFiles as $image): ?>
+                            <?php if(empty($search) || stripos($image, $search) !== false): ?>
+                                <tr>
+                                    <td><?php echo basename($image); ?></td>
+                                    <td class="image-cell"><img src="<?php echo $image; ?>" alt="<?php echo basename($image); ?>"></td>
+                                </tr>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -122,6 +117,3 @@
     </script>
 </body>
 </html>
-
-
-
