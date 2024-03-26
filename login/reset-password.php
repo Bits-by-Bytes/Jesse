@@ -5,6 +5,9 @@ $token = $_GET["token"];
 $token_hash = hash("sha256", $token);
 
 $mysqli = require "../common/database.php";
+include("../common/checkconnection.php");
+include("../common/functions.php");
+
 
 $sql = "SELECT * FROM login
         WHERE RESET_TOKEN = ?";
@@ -28,30 +31,48 @@ if (strtotime($user["RESET_TOKEN_EXP"]) <= time()) {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Reset Password</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../styles/mystyles.css">
+	<link rel="icon" type="image/x-icon" href="../images/favi.png">
+
+    <script src="../javascript/responsive-nav.js"></script>
 </head>
 <body>
+<nav>
+        <?php print_nav(); ?>
+    </nav>
 
-    <h1>Reset Password</h1>
+    <main>
+        <div class="login-container">
+		
+            <div class="login-form">		
+                <!-- Title -->
 
-    <form method="post" action="process-reset-password.php">
+        <h1>Reset Password</h1>
 
-        <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
+        <form method="POST" action="process-reset-password.php">
 
-        <label for="password">New password</label>
-        <input type="password" id="password" name="password">
+            <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
 
-        <label for="password_confirmation">Repeat password</label>
-        <input type="password" id="password_confirmation"
-               name="password_confirmation">
+            <input type="password" placeholder="New Password" id="password" name="password" required/>
 
-        <button>Send</button>
-    </form>
-
+            <input type="password" placeholder="Repeat Password" id="password_confirmation" name="password_confirmation" required/>
+            <br>
+            <button style="width: 85%" class="btn">Send</button>
+        </form>
+        </div>
+    </div>
+    </main>
+    <footer>
+        <?php print_footer(); ?>
+    </footer>
 </body>
+
 </html>

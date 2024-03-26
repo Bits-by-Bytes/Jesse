@@ -9,7 +9,7 @@
 	//	echo 'Phew we have it!';
 	//}
 
-	// TODO: Fix the two email send cause its annoying
+	
 
     //Import PHPMailer classes into the global namespace
     //These must be at the top of your script, not inside a function
@@ -189,6 +189,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="../styles/mystyles.css">
+	<link rel="icon" type="image/x-icon" href="../images/favi.png">
+
 	<script src="../javascript/responsive-nav.js"></script>
 
 </head>
@@ -200,10 +202,17 @@
 	<main>
 	  <div class="login-container">
 		<div class="login-form signup-form">
-		  <!-- title -->
+		<title>Signup</title>
 		  
-		  <form method="post">	
-		  <h2>Sign Up</h2><br><br>
+		  <form method="post">
+		  <?php 
+if (isset($_SESSION['started-request'])){
+    echo '<a class="btn" style="float: left;" href="../selection-tool/confirmation.php"><</a>';
+} else {
+    echo '<a class="btn" style="float: left;" href="../selection-tool/index.php">&lt;</a><br>';
+}
+?><br>
+		  <h2>Sign Up</h2><br>
 
 		  <?php
 		  // possible make it red
@@ -212,18 +221,12 @@
 			<input type="text" name="name" placeholder="Name" value="" required>	  
 			<input type="text" name="email" placeholder="Email" value="<?php echo $email; ?>" required>
 			<input type="password" name="password" placeholder="Password" required>
-			<input type="password" name="passwordVerify" placeholder="Confirm Password" required><br><br>
+			<input type="password" name="passwordVerify" placeholder="Confirm Password" required><br>
 
-			<a href='login.php'>Log in here</a><br><br>
+			<text>Have an Account? </text><a href='login.php' style="width: 85%;">Login</a><text></text><br><br>
+
 			<input type="submit" value="Sign Up" name='verify_email' class="btn">
-
-			<?php
-				// if start request has started		
-						
-				if (isset($_SESSION['started-request'])){
-					echo '<a class="btn" href="../selection-tool/confirmation.php">Back</a>';
-				}
-			?>	
+				
 		  </form>
 		</div>
 	  </div>		

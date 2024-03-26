@@ -1,12 +1,13 @@
 <?php
+	// Start the session
 	session_start();
 
-	if(isset($_SESSION['id']))
-	{
-		unset($_SESSION['id']);
-		unset($_SESSION['info']);
-	}
+	// Unset all session variables
+	session_unset();
 
+	// Destroy the session
+	session_destroy();
+
+	
 	header("Location: login.php");
 	die;
-?>

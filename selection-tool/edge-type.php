@@ -2,8 +2,18 @@
     // Start session
     session_start();
     
-    // Include common functions
-    include("../common/functions.php");
+	// Include common functions
+	include("../common/functions.php");
+    include("../common/checkconnection.php");
+
+        // get login for acc_type to display user or admin
+        if (isset($_SESSION['id'])) {
+            $user_data = check_Login($conn);
+            $id = $user_data['CUST_ID']; 
+            $accountType = $user_data['ACC_TYPE']; 
+        } else {
+            $accountType = "selection";
+        }
     
     // Handle form submission
     if (isset($_POST['next'])) {
@@ -28,6 +38,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/selection-tool.css">
     <link rel="stylesheet" href="../styles/mystyles.css">
+    <link rel="icon" type="image/x-icon" href="../images/favi.png">
+
     <script src="../javascript/responsive-nav.js"></script>
     <title>Edge Type</title>
     <style>
@@ -40,15 +52,18 @@ ul li {
 <body>
     <!-- Navigation -->
     <nav>
-        <?php print_nav(); ?>
-    </nav>
+    <?php 
+        print_nav(); 
+        print_navTool($accountType); 
+     ?>
+</nav>
 
     <main>
         <div class="page-container">
             <!-- Header -->
             <div class="header-container">
                 <div class="title">
-                    <h1>Select the edge type</h1>
+                    <h1>Select the Edge type</h1>
                 </div>
             </div>
             <?php exit_selection(); ?><br>
@@ -66,24 +81,17 @@ ul li {
                             <label for="cb1"><img src="../images/furniture-samples/edge-type/live-edge.png" /></label>
                         </li>
                         <li>
-                            Non-Live Edge
-                            <input type="radio" name="edge-type" value="non-live" id="cb2" 
-                                <?php if(isset($_SESSION['info']['edge-type']) && ($_SESSION['info']['edge-type']) == 'non-live') echo 'checked'; ?>
+                            Straight Edge
+                            <input type="radio" name="edge-type" value="straight" id="cb2" 
+                                <?php if(isset($_SESSION['info']['edge-type']) && ($_SESSION['info']['edge-type']) == 'straight') echo 'checked'; ?>
                             />
-                            <label for="cb2"><img src="../images/furniture-samples/edge-type/non-live.png" /></label>
+                            <label for="cb2"><img src="../images/furniture-samples/edge-type/straight-edge.png" /></label>
                         </li>
                     </ul>
 
                     <!-- Navigation controls -->
                     <div class="nav-controls">
-                        <?php 
-                            // Determine previous page based on edge type and furniture type
-                            if (isset($_SESSION['info']['edge-type']) && $_SESSION['info']['furniture-type'] == 'table'){
-                                echo '<a href="table-shape-option.php">Previous</a>';
-                            } else {
-                                echo '<a href="wood-type.php">Previous</a>';
-                            }
-                        ?>                    
+                        <a href="wood-type.php">Previous</a>                 
                         <input class="btn" type="submit" value="Next" name="next">                    
                     </div>
                 </form>
@@ -92,7 +100,7 @@ ul li {
     </main>
 
     <footer>
-        <?php print_footer(); ?>
+        <?php print_footer1(); ?>
     </footer>
 </body>
 

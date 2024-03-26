@@ -38,6 +38,8 @@
     <link rel="stylesheet" href="../styles/selection-tool.css">
     <link rel="stylesheet" href="../styles/mystyles.css">
     <link rel="stylesheet" href="../styles/dashboardStyles.css">
+    <link rel="icon" type="image/x-icon" href="../images/favi.png">
+
 
     <!-- Script for responsive navigation -->
     <script src="../javascript/responsive-nav.js"></script>
@@ -53,23 +55,21 @@
         <div class="container">	
             <div class="dashboard">
                 <div class="left-div">
-                    <h1>Start Building</h1>
+                    <h1></h1>
 
                     <!-- TODO: FIX THIS LAYOUT OF PAGE ITS BAD -->
-                            <form method="post" action="">
+                            <form style="width: 75%; margin: 0 auto;" method="post" action="furniture-type.php">
                                 <!-- Submit Button -->
-                                <input class="btn" style="width: 80%; height: 80px; font-size: 50px;" type="submit" value="Start" name="next">
-                            </form>
-
-
-                            
-                            <!-- TODO: FIX THIS LAYOUT OF PAGE ITS BAD -->
+                                <input class="btn" style="width: 45%; margin: 0 auto; height: 80px; font-size: 50px;" type="submit" value="Start Here" name="started-request">
+                          
+                            <!-- TODO: Make it so user can go back from log in to the start -->
                             <!-- TODO: Might want to make these buttons and just in case unset some stuff -->
                             <!-- TODO: Breadcrumbs????? -->
-                            <h2>Have an Account?</h2>
-                            <a href='../login/login.php'>Log in here</a>
-                            <h2>Or signup</h2>
-                            <a href='../login/signup.php'>Sign up here</a>
+                            <h2 style="font-size: 25px;">Have an Account?</h2>
+                            <a href='../login/login.php' style="width: 45%; height: 40px; font-size: 35px; margin: 0 auto;">Login</a>
+                            <h2 style="font-size: 25px;"> Or </h2>
+                            <a href='../login/signup.php' style="width: 45%; height: 40px; font-size: 35px; margin: 0 auto;">Sign up</a>
+                            </form>
                 </div>
 
                 <div class="right-div">

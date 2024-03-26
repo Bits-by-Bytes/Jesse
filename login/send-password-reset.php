@@ -66,4 +66,4 @@ $mail->send();
 }
 
 
-echo "Message sent, please check your inbox.";
+header( "refresh:3;url=login.php" );

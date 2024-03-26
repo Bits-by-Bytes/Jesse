@@ -46,6 +46,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/mystyles.css">
+	<link rel="icon" type="image/x-icon" href="../images/favi.png">
+
     <script src="../javascript/responsive-nav.js"></script>
 </head>
 
@@ -58,7 +60,8 @@
         <div class="login-container">
             <div class="login-form">
 			<h1> Reset your password </h1>
-			
+			<title>Password Reset</title>
+
 			<?php // how the video had it	
 				$selector = $_GET['selector'];
 				$validator = $_GET['validator'];

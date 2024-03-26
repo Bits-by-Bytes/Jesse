@@ -2,8 +2,18 @@
     // Start session
     session_start();
     
-    // Include common functions
-    include("../common/functions.php");
+	// Include common functions
+	include("../common/functions.php");
+    include("../common/checkconnection.php");
+
+        // get login for acc_type to display user or admin
+        if (isset($_SESSION['id'])) {
+            $user_data = check_Login($conn);
+            $id = $user_data['CUST_ID']; 
+            $accountType = $user_data['ACC_TYPE']; 
+        } else {
+            $accountType = "selection";
+        }
     
     // Handle form submission
     if (isset($_POST['next'])) {
@@ -17,14 +27,14 @@
         
         // Determine the next page based on epoxy option
         if ($_SESSION['info']['epoxy-option'] == 'epoxy') {
-            header("location: epoxy-option-1.php");
+            header("location: epoxy-options.php");
         } else {
             // Unset unwanted variables since there is no epoxy
             unset($_SESSION['info']['epoxy-type']);
             unset($_SESSION['info']['epoxy-foggy']);
             unset($_SESSION['info']['epoxy-style']);
             unset($_SESSION['info']['epoxy-color']);
-            header("location: additional-details.php");
+            header("location: dimensions.php");
         }
     } 
 ?>
@@ -36,20 +46,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/selection-tool.css">
     <link rel="stylesheet" href="../styles/mystyles.css">
+    <link rel="icon" type="image/x-icon" href="../images/favi.png">
+
     <script src="../javascript/responsive-nav.js"></script>
     <title>Epoxy?</title>
     <style> ul li {margin-top:20px;}</style>
 </head>
 <body>
-    <nav>
-        <?php print_nav(); ?>
-    </nav>
+<nav>
+    <?php 
+        print_nav(); 
+        print_navTool($accountType); 
+     ?>
+</nav>
 
     <main>
         <div class="page-container">
             <div class="header-container">
                 <div class="title">
-                    <h1>Epoxy or Nah?</h1>
+                    <h1>Select Epoxy Options</h1>
                 </div>
             </div>
             <?php exit_selection(); ?><br>
@@ -57,7 +72,7 @@
                 <form method="POST">
                     <ul>
                         <li>
-                            No Epoxy
+                            Without Epoxy
                             <input type="radio" name="epoxy-option" value="no-epoxy" id="cb1" 
                                 <?php 
                                 if(isset($_SESSION['info']['epoxy-option']) && ($_SESSION['info']['epoxy-option']) == 'no-epoxy') echo 'checked'; 
@@ -66,7 +81,7 @@
                             <label for="cb1"><img src="../images/furniture-samples/epoxy-option/yes-no/no-epoxy.png" /></label>
                         </li>
                         <li>
-                            Epoxy
+                            With Epoxy
                             <input type="radio" name="epoxy-option" value="epoxy" id="cb2" 
                                 <?php if(isset($_SESSION['info']['epoxy-option']) && ($_SESSION['info']['epoxy-option']) == 'epoxy') echo 'checked'; ?>
                             />
@@ -84,7 +99,7 @@
     </main>
 
     <footer>
-        <?php print_footer(); ?>
+        <?php print_footer1(); ?>
     </footer>
 </body>
 </html>

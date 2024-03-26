@@ -60,6 +60,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/mystyles.css">
+	<link rel="icon" type="image/x-icon" href="../images/favi.png">
+
     <script src="../javascript/responsive-nav.js"></script>
 </head>
 
@@ -72,7 +74,16 @@
         <div class="login-container">
 		
             <div class="login-form">		
-                <!-- Title -->
+            <title>Login</title>
+				<?php 
+if (isset($_SESSION['started-request'])){
+    echo '<a class="btn" style="float: left;" href="../selection-tool/confirmation.php"><</a>';
+} else {
+    echo '<a class="btn" style="float: left;" href="../selection-tool/index.php">&lt;</a><br>';
+}
+?>
+<br>
+
                 <h2>Login</h2><br>
                 <form method="POST">
 					<!-- Maybe make red for UI -->
@@ -83,16 +94,7 @@
                     <a href="signup.php">Sign up here</a> &nbsp;&nbsp;&nbsp;<a href='forgot-password.php'>Forgot Password?</a>
 					
 					<br><br>
-					<?php
-						// if start request has started		
-						
-						if (isset($_SESSION['started-request'])){
-							echo '<a href="../selection-tool/confirmation.php">Back</a>';
-						}
-					
-					?>
-					<br><br>
-                    <input type="submit" name="user" value="Login" class="btn"><br><br>
+                    <input style="width: 85%" type="submit" name="user" value="Login" class="btn"><br><br>
                 </form>
 				
             </div>
