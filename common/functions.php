@@ -78,7 +78,7 @@ function print_navDash($accountType)
 	} else {
 		echo '
 			<a href="account-Information.php">Account Information</a>
-			<a href="manage-order.php">Manage Order</a>
+			<a href="manage-order.php">Manage Orders</a>
 		';			
     }
 
@@ -120,7 +120,7 @@ echo "You are not signed in";
 					echo '
 					<a href="../dashboard/dashboard.php">Dash</a>
 					<a href="../dashboard/account-Information.php">Account Information</a>
-					<a href="../dashboard/manage-order.php">Manage Order</a>
+					<a href="../dashboard/manage-order.php">Manage Orders</a>
 					';			
 				}
 

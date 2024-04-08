@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "produceApp",
+    "slug": "produceApp",
+    "version": "1.0.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "icon": "./assets/icon.png",
+      "supportsTablet": true,
+      "bundleIdentifier": "ca.jesse.produceApp",
+      "buildNumber": "1.0.0.1"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "ca.jesse.produceApp",
+      "versionCode": 1001
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6f3c608a-0530-4f11-bcdc-4e3829d0defb"
+      }
+    }
+  }
+}

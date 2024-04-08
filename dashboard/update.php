@@ -222,9 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="dashboard">
         <div class="header">
             <div class="welcomeContainer"><h1>Manage Order</h1></div>
-            <div class="dropdownContainer"><?php print_dropdown($accountType); ?></div>
-        </div>
-        <a href="<?php echo $back_link; ?>" class="btn">Back</a>
+            <a href="<?php echo $back_link; ?>" class="btn">Back</a>        </div>
         <h1>Customer: <b><?php echo $user !== null ? $user['FNAME'] : "Unknown" ?></b></h1>
 
    
