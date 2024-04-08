@@ -81,10 +81,9 @@ input[type="number"] {
                     <div class="title">
                         <h1>Enter Product Dimensions (In Meters)</h1>
                     </div>
-                    <label for="length">Length x Width x Height:</label>
-                    <input type="number" id="length" name="length" required value="<?php echo isset($_SESSION['info']['length']) ? $_SESSION['info']['length'] : ''; ?>"><br><br>
-                    <input type="number" id="width" name="width" required value="<?php echo isset($_SESSION['info']['width']) ? $_SESSION['info']['width'] : ''; ?>"><br><br>
-                    <input type="number" id="height" name="height" required value="<?php echo isset($_SESSION['info']['height']) ? $_SESSION['info']['height'] : ''; ?>"><br><br>
+                    <input type="number" id="length" name="length" required value="<?php echo isset($_SESSION['info']['length']) ? $_SESSION['info']['length'] : ''; ?>">Length<br><br>
+                    <input type="number" id="width" name="width" required value="<?php echo isset($_SESSION['info']['width']) ? $_SESSION['info']['width'] : ''; ?>">Width<br><br>
+                    <input type="number" id="height" name="height" required value="<?php echo isset($_SESSION['info']['height']) ? $_SESSION['info']['height'] : ''; ?>">Height<br><br>
 
 
                     

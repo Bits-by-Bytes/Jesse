@@ -24,14 +24,14 @@
 			$_SESSION['info'][$key] = $value;
 		}
 
-		// Remove 'next' value from session
+		// Remove 'next' value from session as it will appear later
 		unset($_SESSION['info']['next']);
 
-		// Redirect based on furniture type
+		// Redirect based on furniture type if its table or not will send different path
 		if ($_SESSION['info']['furniture-type'] == 'table') {
 			header("location: table-options.php");
 		} else {
-			// Unset specific table options if not a table
+			// Unset specific table options if not a table so it doesnt keep it despite going back
 			unset($_SESSION['info']['table-shape-opt']);
 			header("location: wood-type.php");
 		}
