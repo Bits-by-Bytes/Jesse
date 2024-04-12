@@ -84,7 +84,7 @@
                             Circle
                             <input type="radio" name="table-shape-opt" value="circle" id="cb2"
                                 <?php if (isset($_SESSION['info']['table-shape-opt']) && $_SESSION['info']['table-shape-opt'] == 'circle') echo 'checked'; ?> />
-                            <label for="cb3"><img src="../images/furniture-samples/table-shape-opt/circle.png" /></label>
+                            <label for="cb2"><img src="../images/furniture-samples/table-shape-opt/circle.png" /></label>
                         </li>
                     </ul>
 
@@ -95,14 +95,14 @@
                         <li>
                             straight legs
                             <input type="radio" name="table-base-opt" value="straight-legs" id="cb3"
-                                <?php if (isset($_SESSION['info']['table-shape-opt']) && $_SESSION['info']['table-shape-opt'] == 'square') echo 'checked'; ?> />
-                            <label for="cb4"><img src="../images/furniture-samples/images.png" /></label>
+                                <?php if (isset($_SESSION['info']['table-shape-opt']) && $_SESSION['info']['table-shape-opt'] == 'straight-legs') echo 'checked'; ?> />
+                            <label for="cb3"><img src="../images/furniture-samples/images.png" /></label>
                         </li>
                         <li>
                             Tapered Legs
                             <input type="radio" name="table-base-opt" value="tapered-legs" id="cb4"
-                                <?php if (isset($_SESSION['info']['table-shape-opt']) && $_SESSION['info']['table-shape-opt'] == 'circle') echo 'checked'; ?> />
-                            <label for="cb5"><img src="../images/furniture-samples/thisone.png" /></label>
+                                <?php if (isset($_SESSION['info']['table-shape-opt']) && $_SESSION['info']['table-shape-opt'] == 'tapered-legs') echo 'checked'; ?> />
+                            <label for="cb4"><img src="../images/furniture-samples/thisone.png" /></label>
                         </li>
                     </ul>
 
