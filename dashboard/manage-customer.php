@@ -1,39 +1,46 @@
 <?php
-    session_start();
+session_start();
 
-    include("../common/checkconnection.php");
-    include("../common/functions.php");
-    
-    // get login for acc_type to display user or admin
-    // check if it is a valid user in in check_login
-    // gets id for later if needed
-    $user_data = check_Login($conn);
-    $id = $user_data['CUST_ID']; 
-	$accountType = $user_data['ACC_TYPE']; 
-    
-    // Get first name for the user
-    $query = "SELECT FNAME FROM customer WHERE CUST_ID = '$id' LIMIT 1";
-    $result = mysqli_query($conn, $query);
+include("../common/checkconnection.php");
+include("../common/functions.php");
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $fname = $row['FNAME'];
-    } else {
-        $fname = ''; // handle the case when no data is found
-    }
+// get login for acc_type to display user or admin
+// check if it is a valid user in in check_login
+// gets id for later if needed
+$user_data = check_Login($conn);
+$id = $user_data['CUST_ID']; 
+$accountType = $user_data['ACC_TYPE']; 
 
-	$sqlQuery = "SELECT * FROM customer";
+// Get first name for the user
+$query = "SELECT FNAME FROM customer WHERE CUST_ID = '$id' LIMIT 1";
+$result = mysqli_query($conn, $query);
 
-    // Checks for any of the switch
-    if(isset($_GET['search']) && !empty($_GET['search'])) {
-        $search = mysqli_real_escape_string($conn, $_GET['search']);
-        // Add search condition to SQL query
-        $sqlQuery .= " WHERE FNAME LIKE '%$search%'";
-    }
+if ($result && mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+    $fname = $row['FNAME'];
+} else {
+    $fname = ''; // handle the case when no data is found
+}
 
-    // Execute the SQL query
-    $resultSet = mysqli_query($conn, $sqlQuery);
+$sqlQuery = "SELECT * FROM customer";
+
+// Exclude admin accounts
+if ($accountType != 'ADMIN') {
+    // Only include customer accounts
+    $sqlQuery .= " INNER JOIN login ON customer.CUST_ID = login.CUST_ID WHERE login.ACC_TYPE = 'CUST'";
+}
+
+// Checks for any of the switch
+if(isset($_GET['search']) && !empty($_GET['search'])) {
+    $search = mysqli_real_escape_string($conn, $_GET['search']);
+    // Add search condition to SQL query
+    $sqlQuery .= " AND FNAME LIKE '%$search%'";
+}
+
+// Execute the SQL query
+$resultSet = mysqli_query($conn, $sqlQuery);
 ?>
+
 
 <!DOCTYPE html>
 <html>

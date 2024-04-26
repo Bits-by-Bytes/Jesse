@@ -24,17 +24,19 @@ if ($accountType == 'ADMIN') {
     FROM `order` o 
     INNER JOIN customer c ON o.CUST_ID = c.CUST_ID 
     INNER JOIN login l ON c.CUST_ID = l.CUST_ID
+    WHERE l.ACC_TYPE = 'CUST' -- Only retrieve data for customer accounts
     ORDER BY o.ORD_DATE DESC";
 } else {
-    // if user they only see there stuff
+    // if user they only see their stuff
     $sqlQuery = "SELECT c.FNAME, c.LNAME, l.EMAIL, o.* 
     FROM `order` o 
     INNER JOIN customer c ON o.CUST_ID = c.CUST_ID 
     INNER JOIN login l ON c.CUST_ID = l.CUST_ID
     WHERE o.CUST_ID = $id 
+    AND l.ACC_TYPE = 'CUST' -- Only retrieve data for customer accounts
     ORDER BY o.ORD_DATE DESC"; // Order by order date in descending order
-
 }
+
 
 
 
